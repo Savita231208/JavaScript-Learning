@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="usernameApp">
+<head>
+  <title>Username Verification</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .valid { color: green; }
+    .invalid { color: red; }
+  </style>
+</head>
+<body ng-controller="UsernameController">
+
+  <h2>Username Verification Form</h2>
+
+  <form name="userForm">
+    <label for="username">Enter Username:</label>
+    <input type="text" id="username" ng-model="username" ng-change="verifyUsername()" required />
+    <p ng-if="usernameStatus === 'valid'" class="valid">✅ Username is valid!</p>
+    <p ng-if="usernameStatus === 'invalid'" class="invalid">❌ Invalid username!</p>
+  </form>
+
+  <script>
+    angular.module('usernameApp', [])
+      .controller('UsernameController', ['$scope', function($scope) {
+        $scope.username = '';
+        $scope.usernameStatus = '';
+
+        const validUsernames = ['admin', 'user123', 'testuser']; // You can replace with your own logic
+
+        $scope.verifyUsername = function() {
+          if ($scope.username && validUsernames.includes($scope.username.toLowerCase())) {
+            $scope.usernameStatus = 'valid';
+          } else {
+            $scope.usernameStatus = 'invalid';
+          }
+        };
+      }]);
+  </script>
+
+</body>
+</html>
